@@ -7,24 +7,55 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+## Problem 1
+```{r Set Dataframe}
+#set dataframe
+set.seed(1)
+df <- tibble(
+  normal_10 = rnorm(10, mean = 0, sd = 1),
+  vec_logical = normal_10 > 0,
+  vec_character = c("a","b","c","d","e","f","g","h","i","j"),
+  vec_factor_10 = factor(c("l","m","n","l","m","n","l","m","m","l"))
+)
 ```
 
-## Including Plots
+```{r Take the mean of each variable and print out}
+mean_normal <-  mean(pull(df, "normal_10"))
+mean_normal
 
-You can also embed plots, for example:
+mean_logical <-  mean(pull(df, "vec_logical"))
+mean_logical
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+mean_character <- mean(pull(df, "vec_character"))
+mean_character
+
+mean_factor <- mean(pull(df, "vec_factor_10"))
+mean_factor
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The mean of a random sample and a logical vector work. The mean of a character vector and a factor vector do not work.
+
+```{r Use as.numeric, eval = FALSE}
+#convert logical
+as.numeric(pull(df, "vec_logical"))
+
+#convert character
+as.numeric(pull(df, "vec_character"))
+
+#convert factor
+as.numeric(pull(df, "vec_factor_10"))
+```
+
+as.numeric function succeed to convert logical and factor variables, but fail to convert character vector.
+
+## Problem 2
+```{r }
+data("penguins",package = "palmerpenguins")
+```
+
+The data in this dataset is about penguins. There are `r length(names(penguins))` variables in the dataset. They are `r names(penguins)`, and their types successively are `r apply(penguins,2,class)`, 
+
