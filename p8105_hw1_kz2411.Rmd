@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
+library(ggplot2)
 ```
 
 ## Problem 1
@@ -50,12 +51,24 @@ as.numeric(pull(df, "vec_character"))
 as.numeric(pull(df, "vec_factor_10"))
 ```
 
-as.numeric function succeed to convert logical and factor variables, but fail to convert character vector.
+as.numeric function succeed to convert logical and factor variables, but fail to convert character vector. 
+Because
+It helps. When taking the mean, R will convert logical and factor variables into numeric, except character.
 
 ## Problem 2
-```{r }
+```{r load data}
 data("penguins",package = "palmerpenguins")
 ```
 
-The data in this dataset is about penguins. There are `r length(names(penguins))` variables in the dataset. They are `r names(penguins)`, and their types successively are `r apply(penguins,2,class)`, 
+The data in this dataset is about penguins. The size of the dataset is `r nrow(penguins)` rows and `r ncol(penguins)` columns.
+There are `r length(names(penguins))` variables in the dataset.  
+They are `r names(penguins)`. And their types successively are `r class(pull(penguins,1))`, `r class(pull(penguins,2))`, `r class(pull(penguins,3))`, `r class(pull(penguins,4))`, `r class(pull(penguins,5))`, `r class(pull(penguins,6))`, `r class(pull(penguins,7))` and `r class(pull(penguins,8))`.  
+The mean flipper length is `r mean(pull(penguins,"flipper_length_mm"), na.rm = TRUE)`mm.
+
+```{r scatterplot}
+scatterplot <- ggplot(penguins,aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point(na.rm = TRUE) +xlab("Bill Length (mm)") + ylab("Flipper Length (mm)")
+scatterplot
+ggsave("./scatterplot.png", scatterplot)
+```
+
 
