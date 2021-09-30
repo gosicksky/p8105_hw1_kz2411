@@ -1,15 +1,14 @@
 ---
 title: "Data Science Homework 1"
-author: "Keming Zhang"
+author: "Keming Zhang kz2411"
 date: "9/25/2021"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
-library(ggplot2)
 ```
 
 ## Problem 1
@@ -51,9 +50,9 @@ as.numeric(pull(df, "vec_character"))
 as.numeric(pull(df, "vec_factor_10"))
 ```
 
-as.numeric function succeed to convert logical and factor variables, but fail to convert character vector. 
-Because
-It helps. When taking the mean, R will convert logical and factor variables into numeric, except character.
+as.numeric function succeeds to convert logical and factor variables, but fails to convert character vector.  
+Because it is the setting of as.numeric function that it cannot convert the character strings except it is composed of the character of number.  
+It helps. When taking the mean, R will convert logical variables into numeric variables automatically, except character and factor variables.
 
 ## Problem 2
 ```{r load data}
